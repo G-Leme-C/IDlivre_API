@@ -18,7 +18,8 @@ namespace IDlivreAPI.Model
         public string CO2ReducedPerKm { get; set; }
 
 
-        public int UserId { get; set; }
-        public User User { get; set; }
+        public int UserClientId { get; set; }
+        public UserClient UserClient { get; set; }
+
     }
 }

@@ -24,14 +24,17 @@ namespace IDlivreAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult<UserClient> GetById(int id)
         {
+            if (id <= 0) return BadRequest();
+
             var userClient = _dbContext
                 .UsersClient
                 .Include(uc => uc.User)
                 .FirstOrDefault(u => u.UserId == id);
 
+            if (userClient == null) return NotFound();
+            
             return userClient;
         }
-
 
         [HttpPost]
         public ActionResult Post([FromBody] UserClient userClient)
@@ -49,6 +52,11 @@ namespace IDlivreAPI.Controllers
         [HttpPut]
         public ActionResult Put([FromBody] UserClient userClient)
         {
+            var userExists = _dbContext.UsersClient
+                .Where(u => u.Id == userClient.Id && u.UserId == userClient.UserId)
+                .FirstOrDefault();
+            if (userExists == null) return NotFound();
+
             var userUpdate = _dbContext.Attach(userClient.User);
             userUpdate.State = EntityState.Modified;
 
