@@ -13,14 +13,12 @@ namespace IDlivreAPI.Controllers
     [ApiController]
     public class UserDriverController : ControllerBase
     {
-
         private readonly AppDbContext _dbContext;
 
         public UserDriverController(AppDbContext dbContext)
         {
             this._dbContext = dbContext;
         }
-
 
         [HttpGet("{id}")]
         public ActionResult<UserDriver> GetById(int id)
